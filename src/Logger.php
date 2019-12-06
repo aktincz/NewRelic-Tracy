@@ -21,15 +21,15 @@ class Logger implements \Tracy\ILogger
 	}
 
 	/**
-	 * @param string|array $message
-	 * @param string $priority
-	 * @return string logged error filename
+	 * @param mixed $message
+	 * @param string $level
+	 * @return string|null logged error filename
 	 */
-	public function log($message, $priority = NULL)
+	public function log($message, string $level = self::INFO): ?string
 	{
-		$exceptionFile = $this->oldLogger->log($message, $priority);
+		$exceptionFile = $this->oldLogger->log($message, $level);
 
-		if (in_array($priority, $this->logLevels)) {
+		if (in_array($level, $this->logLevels)) {
 			if (is_array($message)) {
 				$message = implode(' ', $message);
 			}
